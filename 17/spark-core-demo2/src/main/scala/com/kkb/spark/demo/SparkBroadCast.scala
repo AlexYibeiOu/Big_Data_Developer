@@ -10,7 +10,7 @@ object SparkBroadCast {
     val conf = new SparkConf().setAppName("sparkBroadCast").setMaster("local[4]")
     val sparkContext = new SparkContext(conf)
     //读取文件，将商品文件数据内容作为广播变量
-    val productRdd: RDD[String] = sparkContext.textFile(".\\src\\main\\resources\\pdts.txt")
+    val productRdd: RDD[String] = sparkContext.textFile("./src/main/resources/pdts.txt")
     //将数据收集起来
     val mapProduct: collection.Map[String, String] = productRdd.map(x => {
       (x.split(",")(0), x)
@@ -18,7 +18,7 @@ object SparkBroadCast {
     //开始广播
     val broadCastValue: Broadcast[collection.Map[String, String]] = sparkContext.broadcast(mapProduct)
     //读取订单数据
-    val ordersRDD: RDD[String] = sparkContext.textFile(".\\src\\main\\resources\\orders.txt")
+    val ordersRDD: RDD[String] = sparkContext.textFile("./src/main/resources/orders.txt")
     //订单数据rdd进行拼接商品数据
     val proudctAndOrderRdd: RDD[String] = ordersRDD.mapPartitions(eachPartition => {
       val getBroadCastMap: collection.Map[String, String] = broadCastValue.value
