@@ -12,7 +12,7 @@ object UvCount {
     sc.setLogLevel("warn")
 
     //3、读取数据文件
-    val dataRDD: RDD[String] = sc.textFile("/Users/yibeiou/Downloads/IT/Big_Data_Developer/17/第十七章 spark计算框架/第2节 sparkCore第二次课/SparkCore第二次课/工程代码/spark-core-demo2/src/main/resources/access.log")
+    val dataRDD: RDD[String] = sc.textFile(this.getClass().getClassLoader.getResource("access.log").getPath)
 
     //4、获取所有的ip地址
     val ipsRDD: RDD[String] = dataRDD.map(x=>x.split(" ")(0))
