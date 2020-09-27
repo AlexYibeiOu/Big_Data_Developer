@@ -11,7 +11,7 @@ object VisitTopN {
     val sc = new SparkContext(sparkConf)
     sc.setLogLevel("warn")
     //3、读取数据文件
-    val dataRDD: RDD[String] = sc.textFile("/Users/yibeiou/Downloads/IT/Big_Data_Developer/17/第十七章 spark计算框架/第2节 sparkCore第二次课/SparkCore第二次课/工程代码/spark-core-demo2/src/main/resources/access.log")
+    val dataRDD: RDD[String] = sc.textFile(this.getClass().getClassLoader.getResource("access.log").getPath)
     //4、先对数据进行过滤
     val filterRDD: RDD[String] = dataRDD.filter(x =>x.split(" ").length >10)
     //5、获取每一个条数据中的url地址链接
